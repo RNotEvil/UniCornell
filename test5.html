@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<body>
+
+<style>
+
+body {
+text-align: center;
+font-family: Futura;
+background-color: white;
+}
+
+
+nav {
+  background-color: #FFF0B3;
+  font-size: 50px;
+}
+
+button:hover { cursor: pointer; 
+}
+
+button:hover {
+    transform: scale(1.1);
+    background: #FFF0B3;
+    color: #black;
+    border-color: #FFE784;
+}
+
+button {
+    transition: background .3s ease-in,
+    transform .2s .1s ease-in-out;
+}
+    
+button { 
+  border: 2px solid #FFE784;
+  color: black;
+  background: #FFFFFF;
+  width: auto;
+  text-align: center;
+  font-size: 20px;
+}
+
+</style>
+
+<nav>UniCornell Notes Generator</nav>
+<p>This website enables you to upload or record an audio clip and convert it into Cornell-Style notes. Useful for anytime you want to review a lecture, summarize a section of a cool podcast, or can't keep up with your teacher's ridiculously fast speaking pace.</p>
+
+<h3>File Upload</h3>
+<p>Works for MP3</p>
+
+<input type="file" id="audioFileInput">
+<button onclick="loadAudio()">Load Audio</button>
+<audio id="myAudio" controls>
+  Your browser does not support the audio element.
+</audio>
+
+<script>
+  // Get the audio element
+  var audio = document.getElementById("myAudio");
+
+  // Function to handle file selection and load audio
+  function loadAudio() {
+    var fileInput = document.getElementById("audioFileInput");
+    var file = fileInput.files[0];
+
+    if (file) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        audio.src = e.target.result;
+        audio.play();
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
+</script>
+
+<h3>Speech to Text</h3>
+
+    <div class="words" contenteditable>
+        <p id="p"></p>
+    </div>
+  
+    <script>
+        var speech = true;
+        window.SpeechRecognition = window.SpeechRecognition
+                        || window.webkitSpeechRecognition;
+  
+        const recognition = new SpeechRecognition();
+        recognition.interimResults = true;
+        const words = document.querySelector('.words');
+        words.appendChild(p);
+  
+        recognition.addEventListener('result', e => {
+            const transcript = Array.from(e.results)
+                .map(result => result[0])
+                .map(result => result.transcript)
+                .join('')
+  
+            document.getElementById("p").innerHTML = transcript;
+            console.log(transcript);
+        });
+          
+        if (speech == true) {
+            recognition.start();
+            recognition.addEventListener('end', recognition.start);
+        }
+    </script>
+
+<h3>Convert to Cornell Notes</h3>
+  <p>Copy paste the above text with the command: convert to cornell notes and summarize (or anything else for your needs).</p>
+
+    <iframe src="https://chat.openai.com" style="width:500px; height: 300px;">
+
+</body>
+</html>
